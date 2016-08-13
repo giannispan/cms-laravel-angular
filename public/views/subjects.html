@@ -1,0 +1,114 @@
+<menu></menu>
+<div class="container">
+    <div class=" col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                New Subject
+            </div>
+            <div class="panel-body">
+                <!-- New Subject Form  -->
+                <form class="form-horizontal" name="myForm" novalidate>
+                    <!--  Subject Name  -->
+                    <div class="form-group" ng-class="{ 'has-error' : myForm.name.$invalid && !myForm.name.$pristine }">
+                        <label class="col-sm-4 control-label">Subject Name</label>
+                        <div class="col-sm-6">
+                            <input name="name" type="text" class="form-control" value="" ng-model="subjects.name" required>
+                           <p ng-show="myForm.name.$invalid && !myForm.name.$pristine" class="help-block">Subject name is required.</p>
+                        </div>
+                    </div>
+                    <!--  Subject Visibility -->
+                    <div class="form-group" ng-class="{ 'has-error' : myForm.visible.$invalid && !myForm.visible.$pristine }">
+                        <label class="col-sm-4 control-label">Visibility</label>
+                        <div class="col-sm-6">
+                            <select name="visible" ng-model="subjects.visible" ng-options="obj.value as obj.name for obj in subjects.objVisible" class="form-control" required>
+                                <option value=""> Please select </option>
+                            </select>
+                            <p ng-show="myForm.visible.$invalid && !myForm.visible.$pristine" class="help-block">Visibility is required.</p>
+                        </div>
+                    </div>
+                    <!--  Subject Position -->
+                    <div class="form-group" ng-class="{ 'has-error' : myForm.position.$invalid && !myForm.position.$pristine }">
+                        <label class="col-sm-4 control-label">Position</label>
+                        <div class="col-sm-4">
+                            <select name="position" ng-model="subjects.position" class="form-control" ng-options="value for value in subjects.subjectsLength()" required>
+                                <option value="">Please Select
+                                </option>
+                            </select>
+                            <p ng-show="myForm.position.$invalid && !myForm.position.$pristine" class="help-block">Position is required.</p>
+                        </div>
+                    </div>
+                    <!--  Add Subject Button -->
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-4">
+                            <button type="submit" class="btn btn-default" ng-click="subjects.addSubject()" ng-disabled="myForm.$invalid">
+                                <i class="fa fa-btn fa-plus"></i> Add Subject
+                            </button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Current Subjects -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                My Subjects
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped page-table">
+                    <thead>
+                        <th>Subject</th>
+                        <th>&nbsp;</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="subject in subjects.subjects">
+                            <td class="table-text">
+                                <div>{{ subject.name }}</div>
+                            </td>
+                            <!-- Page Edit Button -->
+                            <td>
+                                <form>
+                                    <button type="button" id="edit-subject-{{subject.id }}" class="btn btn-primary" ui-sref="subjectsEdit({id: subject.id})">
+                                        <i class="fa fa-btn fa-pencil"></i> Edit
+                                    </button>
+                                </form>
+                            </td>
+                            <!-- Page Delete Button -->
+                            <td>
+                                <form>
+                                    <button type="button" id="delete-subject-{{ subject.id }}" class="btn btn-danger" ng-click="subjects.deleteSubject(subject.id)">
+                                        <i class="fa fa-btn fa-trash"></i> Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class=" col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                My Content
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped page-table">
+                    <tbody>
+                        <tr ng-repeat="subject in subjects.subjectsVisible">
+                            <td class="table-text">
+                                <div>
+                                    <b>{{ subject.name }}</b>
+                                </div>
+                                <div ng-repeat="page in subjects.filterPages(subject)">
+                                    {{ page.title }}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <button type="button" class="btn btn-success" ui-sref="pages" style="float:right;">My Pages</button>
+    </div>
+</div>

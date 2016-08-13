@@ -1,0 +1,58 @@
+<menu></menu>
+<div class="container spark-screen">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Welcome to a Laravel simple CMS</div>
+                <div class="panel-body">
+                    Here you can manage your content. Please login to continue!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Login</div>
+                <div class="panel-body">
+                    <form class="form-horizontal" name="myForm" novalidate>
+                        <div class="form-group" ng-class="{ 'has-error' : myForm.email.$invalid && !myForm.email.$pristine}">
+                            <label class="col-md-4 control-label">E-Mail Address</label>
+                            <div class="col-md-6">
+                                <input type="email" name="email" class="form-control" placeholder="Email" ng-model="auth.email" required>
+                                <p ng-show="myForm.email.$invalid && !myForm.email.$pristine" class="help-block">Enter a valid email.</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Password</label>
+                            <div class="col-md-6">
+                                <input type="password" class="form-control" placeholder="Password" ng-model="auth.password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary" ng-click="auth.login()" ng-disabled="myForm.$invalid">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="col-sm-4 col-sm-offset-4">
+	<div class="well">
+		<h3>Login</h3>
+		<form>
+			<div class="form-group">
+		    	<input type="email" class="form-control" placeholder="Email" ng-model="auth.email">
+		  	</div>
+		  	<div class="form-group">
+		    	<input type="password" class="form-control" placeholder="Password" ng-model="auth.password">
+		  	</div>
+		  	<button class="btn btn-primary" ng-click="auth.login()">Submit</button>
+		</form>
+	</div>
+</div> -->

@@ -1,0 +1,55 @@
+<menu></menu>
+<div class="container">
+    <div class=" col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Edit Subject
+            </div>
+            <div class="panel-body">
+                <!-- Edit Subject Form  -->
+                <form class="form-horizontal" name="myForm" novalidate>
+                    <!--  Subject Name  -->
+                    <div class="form-group" ng-class="{ 'has-error' : myForm.name.$invalid && !myForm.name.$pristine }">
+                        <label class="col-sm-4 control-label">Subject Name</label>
+                        <div class="col-sm-6">
+                            <input name="name" type="text" id="subject-name" class="form-control" ng-value="{{ subject.name }}" ng-model="subject.subject.name" required>
+                            <p ng-show="myForm.name.$invalid && !myForm.name.$pristine" class="help-block">Subject name is required.</p>
+                        </div>
+                    </div>
+                    <!--  Subject Visibility -->
+                    <div class="form-group" ng-class="{ 'has-error' : myForm.visible.$invalid && !myForm.visible.$pristine }">
+                        <label class="col-sm-4 control-label">Visibility</label>
+                        <div class="col-sm-6">
+                            <select name="visible" ng-model="subject.subject.visible" ng-options="obj.value as obj.name for obj in subject.objVisible" class="form-control" required>
+                                <option value=""> Please select </option>
+                            </select>
+                            <p ng-show="myForm.visible.$invalid && !myForm.visible.$pristine" class="help-block">Visibility is required.</p>
+                        </div>
+                    </div>
+                    <!--  Subject Position -->
+                    <div class="form-group" ng-class="{ 'has-error' : myForm.position.$invalid && !myForm.position.$pristine }">
+                        <label class="col-sm-4 control-label">Position</label>
+                        <div class="col-sm-4">
+                            <select name="position" ng-model="subject.subject.position" class="form-control" ng-options="value for value in subject.subjectsLengthEdit()" required>
+                                <option value="">
+                                </option>
+                            </select>
+                            <p ng-show="myForm.position.$invalid && !myForm.position.$pristine" class="help-block">Position is required.</p>
+                        </div>
+                    </div>
+                    <!--  Add Subject Button -->
+                    <div class="form-group">
+                        <div class="col-sm-offset-4">
+                            <button type="submit" class="btn btn-primary" ng-click="subject.updateSubject(subject.id)" ui-sref="subjects" ng-disabled="myForm.$invalid">
+                                Save
+                            </button>
+                            <button type="button" class="btn btn-default" ui-sref="subjects">
+                                Back to Subjects
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
