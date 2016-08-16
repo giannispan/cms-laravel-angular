@@ -24,8 +24,7 @@
                     visible: self.page.visible,
                     content: self.page.content,
                     subject_id: self.page.subject_id
-                }).success(function(response) {
-                }).error(function() {
+                }).success(function(response) {}).error(function() {
                     console.log("error");
                 });
             }

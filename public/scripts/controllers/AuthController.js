@@ -1,26 +1,26 @@
 (function() {
 
-	'use strict';
+    'use strict';
 
-	angular
-		.module('app')
-		.controller('AuthController', AuthController);
+    angular
+        .module('app')
+        .controller('AuthController', AuthController);
 
 
-	function AuthController($auth, $state, $http, $rootScope, Auth) {
+    function AuthController($auth, $state, $http, $rootScope, Auth) {
 
-		var self = this;
+        var self = this;
 
-		self.login = function() {
-			var credentials = {
-				email: self.email,
-				password: self.password
-			}
+        self.login = function() {
+            var credentials = {
+                email: self.email,
+                password: self.password
+            }
 
-			Auth.login(credentials);
-		};
-		
-		self.logout = Auth.logout;
-	}
+            Auth.login(credentials);
+        };
+
+        self.logout = Auth.logout;
+    }
 
 })();

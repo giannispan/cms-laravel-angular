@@ -66,6 +66,6 @@
 
     Factory.$inject = ['$auth', '$state', '$http', '$rootScope', '$location'];
 
-    angular.module('app') 
+    angular.module('app')
         .factory('Auth', Factory);
 })();

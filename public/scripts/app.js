@@ -1,126 +1,126 @@
 (function() {
 
-	'use strict';
+    'use strict';
 
-	angular
-		.module('app', ['ui.router', 'satellizer'])
-		.config(function($stateProvider, $urlRouterProvider, $authProvider, $httpProvider, $provide) {
-			
-			function redirectWhenLoggedOut($q, $injector) {
+    angular
+        .module('app', ['ui.router', 'satellizer'])
+        .config(function($stateProvider, $urlRouterProvider, $authProvider, $httpProvider, $provide) {
 
-				return {
+            function redirectWhenLoggedOut($q, $injector) {
 
-					responseError: function(rejection) {
+                return {
 
-						// Need to use $injector.get to bring in $state or else we get
-						// a circular dependency error
-						var $state = $injector.get('$state');
+                    responseError: function(rejection) {
 
-						// Instead of checking for a status code of 400 which might be used
-						// for other reasons in Laravel, we check for the specific rejection
-						// reasons to tell us if we need to redirect to the login state
-						var rejectionReasons = ['token_not_provided', 'token_expired', 'token_absent', 'token_invalid'];
+                        // Need to use $injector.get to bring in $state or else we get
+                        // a circular dependency error
+                        var $state = $injector.get('$state');
 
-						// Loop through each rejection reason and redirect to the login
-						// state if one is encountered
-						angular.forEach(rejectionReasons, function(value, key) {
+                        // Instead of checking for a status code of 400 which might be used
+                        // for other reasons in Laravel, we check for the specific rejection
+                        // reasons to tell us if we need to redirect to the login state
+                        var rejectionReasons = ['token_not_provided', 'token_expired', 'token_absent', 'token_invalid'];
 
-							if(rejection.data.error === value) {
-								
-								// If we get a rejection corresponding to one of the reasons
-								// in our array, we know we need to authenticate the user so 
-								// we can remove the current user from local storage
-								localStorage.removeItem('user');
+                        // Loop through each rejection reason and redirect to the login
+                        // state if one is encountered
+                        angular.forEach(rejectionReasons, function(value, key) {
 
-								// Send the user to the auth state so they can login
-								$state.go('auth');
-							}
-						});
+                            if (rejection.data.error === value) {
 
-						return $q.reject(rejection);
-					}
-				}
-			}
+                                // If we get a rejection corresponding to one of the reasons
+                                // in our array, we know we need to authenticate the user so 
+                                // we can remove the current user from local storage
+                                localStorage.removeItem('user');
 
-			// Setup for the $httpInterceptor
-			$provide.factory('redirectWhenLoggedOut', redirectWhenLoggedOut);
+                                // Send the user to the auth state so they can login
+                                $state.go('auth');
+                            }
+                        });
 
-			// Push the new factory onto the $http interceptor array
-			$httpProvider.interceptors.push('redirectWhenLoggedOut');
+                        return $q.reject(rejection);
+                    }
+                }
+            }
 
-			$authProvider.loginUrl = 'cms/public/api/authenticate';
+            // Setup for the $httpInterceptor
+            $provide.factory('redirectWhenLoggedOut', redirectWhenLoggedOut);
 
-			$urlRouterProvider.otherwise('/auth');
-			
-			$stateProvider
-				.state('auth', {
-					url: '/auth',
-					templateUrl: 'views/authView.html',
-					controller: 'AuthController as auth'
-				})
-				.state('subjects', {
-					url: '/subjects',
-					templateUrl: 'views/subjects.html',
-					controller: 'SubjectController as subjects'
-				})
-				.state('subjectsEdit', {
-					url: '/subject/:id/edit',
-					templateUrl: 'views/subjects_edit.html',
-					controller: 'EditSubjectController as subject'
-				})
-				.state('pages', {
-					url: '/pages',
-					templateUrl: 'views/pages.html',
-					controller: 'PageController as pages'
-				})
-				.state('pagesEdit', {
-					url: '/page/:id/edit',
-					templateUrl: 'views/pages_edit.html',
-					controller: 'EditPageController as page'
-				})
-				.state('users', {
-					url: '/users',
-					templateUrl: 'views/userView.html',
-					controller: 'UserController as user'
-				});
-		})
-		.run(function($rootScope, $state) {
+            // Push the new factory onto the $http interceptor array
+            $httpProvider.interceptors.push('redirectWhenLoggedOut');
 
-			// $stateChangeStart is fired whenever the state changes. We can use some parameters
-			// such as toState to hook into details about the state as it is changing
-			$rootScope.$on('$stateChangeStart', function(event, toState) {
+            $authProvider.loginUrl = 'cms/public/api/authenticate';
 
-				// Grab the user from local storage and parse it to an object
-				var user = JSON.parse(localStorage.getItem('user'));			
+            $urlRouterProvider.otherwise('/auth');
 
-				// If there is any user data in local storage then the user is quite
-				// likely authenticated. If their token is expired, or if they are
-				// otherwise not actually authenticated, they will be redirected to
-				// the auth state because of the rejected request anyway
-				if(user) {
+            $stateProvider
+                .state('auth', {
+                    url: '/auth',
+                    templateUrl: 'views/authView.html',
+                    controller: 'AuthController as auth'
+                })
+                .state('subjects', {
+                    url: '/subjects',
+                    templateUrl: 'views/subjects.html',
+                    controller: 'SubjectController as subjects'
+                })
+                .state('subjectsEdit', {
+                    url: '/subject/:id/edit',
+                    templateUrl: 'views/subjects_edit.html',
+                    controller: 'EditSubjectController as subject'
+                })
+                .state('pages', {
+                    url: '/pages',
+                    templateUrl: 'views/pages.html',
+                    controller: 'PageController as pages'
+                })
+                .state('pagesEdit', {
+                    url: '/page/:id/edit',
+                    templateUrl: 'views/pages_edit.html',
+                    controller: 'EditPageController as page'
+                })
+                .state('users', {
+                    url: '/users',
+                    templateUrl: 'views/userView.html',
+                    controller: 'UserController as user'
+                });
+        })
+        .run(function($rootScope, $state) {
 
-					// The user's authenticated state gets flipped to
-					// true so we can now show parts of the UI that rely
-					// on the user being logged in
-					$rootScope.authenticated = true;
+            // $stateChangeStart is fired whenever the state changes. We can use some parameters
+            // such as toState to hook into details about the state as it is changing
+            $rootScope.$on('$stateChangeStart', function(event, toState) {
 
-					// Putting the user's data on $rootScope allows
-					// us to access it anywhere across the app. Here
-					// we are grabbing what is in local storage
-					$rootScope.currentUser = user;
+                // Grab the user from local storage and parse it to an object
+                var user = JSON.parse(localStorage.getItem('user'));
 
-					// If the user is logged in and we hit the auth route we don't need
-					// to stay there and can send the user to the main state
-					if(toState.name === "auth") {
+                // If there is any user data in local storage then the user is quite
+                // likely authenticated. If their token is expired, or if they are
+                // otherwise not actually authenticated, they will be redirected to
+                // the auth state because of the rejected request anyway
+                if (user) {
 
-						// Preventing the default behavior allows us to use $state.go
-						// to change states
-						event.preventDefault();
+                    // The user's authenticated state gets flipped to
+                    // true so we can now show parts of the UI that rely
+                    // on the user being logged in
+                    $rootScope.authenticated = true;
 
-						// go to the "main" state which in our case is subjects
-						$state.go('subjects');
-					}		
-				}
-			});
-		});
+                    // Putting the user's data on $rootScope allows
+                    // us to access it anywhere across the app. Here
+                    // we are grabbing what is in local storage
+                    $rootScope.currentUser = user;
+
+                    // If the user is logged in and we hit the auth route we don't need
+                    // to stay there and can send the user to the main state
+                    if (toState.name === "auth") {
+
+                        // Preventing the default behavior allows us to use $state.go
+                        // to change states
+                        event.preventDefault();
+
+                        // go to the "main" state which in our case is subjects
+                        $state.go('subjects');
+                    }
+                }
+            });
+        });
 })();
