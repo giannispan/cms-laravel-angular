@@ -7,3 +7,4 @@ A simple cms with crud in laravel and angular js using token-based authenticatio
 4. Use the following credentials to login :
 	user1@mail.com / 123456
 	user2@mail.com / 654321
+5. Go to localhost/cms/public 
