@@ -47,17 +47,8 @@ class SubjectController extends Controller
     { 
 
 
-        //Simple php version //////////////////////////////////////////////////////
-    	//$model = Subject::find(1);
-		
-
-        /*return view('subjects.subjects', [
-            'subjects' => $this->subjects->forUser($request->user()),
-            'subjectsVisible' => $this->subjects->subjectsVisible($request->user())
-           	
-        ])->withModel($model);*/
     
-        //AngularJS version ///////////////////////////////////////////////////////////
+        //AngularJS version 
         return response()->json([
             'subjects' => $this->subjects->forUser($request->user()),
             'subjectsVisible' => $this->subjects->subjectsVisible($request->user()),
@@ -74,28 +65,7 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        
-        // Simple PHP version/////////////////////////////////////////////////////////
-        /*$this->validate($request, [
-            'name' => 'required|max:255',
-            'visible' => 'required',
-            'position' => 'required',
-        ]);
 
-       	$request->user()->subjects()->create([
-            'name' => $request->name,
-            'visible' => $request->visible,
-            'position' => $request->position,
-        ]);*/
-
-        //AngularJS version///////////////////////////////////////////////////////////
-       /* if(! $request->name or ! $request->position){
-            return response()->json([
-                'error' => [
-                    'message' => 'Please Provide name, position and visibility'
-                ]
-            ], 422);
-        }*/
         $subject = $request->user()->subjects()->create([
             'name' => $request->name,
             'visible' => $request->visible,
@@ -121,9 +91,7 @@ class SubjectController extends Controller
      */
     public function edit (Request $request, Subject $subject) {
 
-    	/*return view('subjects.edit_subject', [
-            'subjects' => $this->subjects->forUser($request->user()),
-        ])->with('subject', $subject);*/
+
 
 
         //AngularJS version
@@ -144,20 +112,7 @@ class SubjectController extends Controller
     public function update(Request $request, Subject $subject)
     {
 
-        // Single PHP Version
 
-    	/*$this->validate($request, [
-            'name' => 'required|max:255',
-            'visible' => 'required',
-            'position' => 'required',
-        ]);*/
-
-       /* $subject->name = $request->name;
-        $subject->visible = $request->visible;
-        $subject->position = $request->position;
-        $subject->save(); */
-
-        //return redirect('/subjects');
 
         //AngularJS Version
         $subject->name = $request->name;

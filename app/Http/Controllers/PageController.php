@@ -44,15 +44,6 @@ class PageController extends Controller
     public function index(Request $request)
     {
 
-        //Simple PHP Version
-        //$model = Page::find(1);
-
-        /*return view('pages.index', [
-            'pages' => $this->pages->forUser($request->user()),
-            'subjects' => $this->subjects->forUser($request->user()),
-            'subjectsVisible' => $this->subjects->subjectsVisible($request->user())
-        ])->withModel($model);*/
-
         
         //AngularJS Version
          return response()->json([
@@ -71,22 +62,6 @@ class PageController extends Controller
     public function store(Request $request)
     {
         
-        //Simple PHP Version
-        /*$this->validate($request, [
-            'title' => 'required|max:255',
-            'content' => 'required',
-            'subject_id' => 'required',
-            'visible' =>'required'
-        ]);*/
-
-        /*$request->user()->pages()->create([
-            'title' => $request->title,
-            'subject_id' => $request->subject_id,
-            'visible' => $request->visible,
-            'content' => $request->content
-        ]);
-
-        return redirect('/pages');*/
 
         //AngularJS Version
         if(! $request->title or ! $request->subject_id){
@@ -119,18 +94,7 @@ class PageController extends Controller
      */
     public function edit (Request $request, Page $page) {
 
-        /*$model = Page::find(1);
 
-
-
-    	return view('pages.edit_page', [
-            'pages' => $this->pages->forUser($request->user()),
-            'subjects' => $this->subjects->forUser($request->user()),
-        ])->with('page', $page)->withModel($model);*/
-    	//return view('subjects.edit_subject')->with('subject', $subject);
-
-
-        //AngularJS Version
         //AngularJS version
         return response()->json([
             'subjects' => $this->subjects->forUser($request->user()),
@@ -150,22 +114,7 @@ class PageController extends Controller
     public function update(Request $request, Page $page)
     {
 
-    	//Simple PHP Version
-        /*$this->validate($request, [
-            'title' => 'required|max:255',
-            'visible' => 'required',
-            'subject_id' => 'required',
-            'content' => 'required'
-        ]);*/
-
-    	/*$page->title = $request->title;
-        $page->content = $request->content;
-        $page->visible = $request->visible;
-        $page->subject_id = $request->subject_id;
-        $page->save(); 
-
-
-        return redirect('/pages');*/
+ 
 
         //AngularJS Version
         $page->title = $request->title;
