@@ -6,18 +6,21 @@
         .module('app')
         .controller('SubjectController', SubjectController);
 
-    function SubjectController($http, $auth, $rootScope, $location, $state, $stateParams, Auth) {
+    function SubjectController($http, $auth, $rootScope, $location, $state, $stateParams, Auth, subjectsResolve) {
 
         var self = this;
+        self.subjectsResolve = subjectsResolve;
+        //console.log(subjectsResolve);
+
 
         //Visibility Object
         self.objVisible = [{ name: 'Visible', value: 1 }, { name: 'Invisible', value: 0 }];
 
-        $http.get('http://localhost/cms/public/subjects').success(function(subjects, subjectsVisible, pages) {
+        
 
-            self.subjects = subjects.subjects;
-            self.subjectsVisible = subjects.subjectsVisible;
-            self.pages = subjects.pages;
+            self.subjects = subjectsResolve.subjects;
+            self.subjectsVisible = subjectsResolve.subjectsVisible;
+            self.pages = subjectsResolve.pages;
 
             //Filter Visible Pages for each Subject
             self.filterPages = function(subject) {
@@ -44,12 +47,12 @@
                     position: self.position
 
                 }).success(function(response) {
-                    console.log(response);
+                    //console.log(response);
                     location.reload();
                     // console.log(vm.jokes);
                     // vm.jokes.push(response.data);
                     self.subjects.unshift(response.subjects);
-                    console.log(self.subjects.subjects);
+                    //console.log(self.subjects.subjects);
                     self.subject_name = '';
                     // alert(data.message);
                     // alert("Joke Created Successfully");
@@ -70,11 +73,11 @@
                     });
                 }
             }
-        }).error(function(error) {
-            self.error = error;
-        });
+       
 
         self.logout = Auth.logout;
     }
+
+    SubjectController.$inject = ['$http', '$auth', '$rootScope', '$location', '$state', 'Auth', '$stateParams', 'subjectsResolve'];
 
 })();

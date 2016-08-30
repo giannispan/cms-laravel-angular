@@ -6,19 +6,19 @@
         .module('app')
         .controller('PageController', PageController);
 
-    function PageController($http, $auth, $rootScope, $location, $state, Auth) {
+    function PageController($http, $auth, $rootScope, $location, $state, Auth, pagesResolve) {
 
         var self = this;
+        self.pagesResolve = pagesResolve;
+        //console.log(pagesResolve);
 
         //Visibility Object
         self.pageVisible = [{ name: 'Visible', value: 1 }, { name: 'Invisible', value: 0 }];
 
 
-        $http.get('http://localhost/cms/public/pages').success(function(pages, subjects, subjectsVisible) {
-
-            self.subjects = pages.subjects;
-            self.subjectsVisible = pages.subjectsVisible;
-            self.pages = pages.pages;
+            self.subjects = pagesResolve.subjects;
+            self.subjectsVisible = pagesResolve.subjectsVisible;
+            self.pages = pagesResolve.pages;
 
             //Filter Visible Pages for each Subject
             self.filterPages = function(subject) {
@@ -60,14 +60,9 @@
                 }
             }
 
-            console.log(pages);
-
-        }).error(function(error) {
-            self.error = error;
-        });
-
+        
         self.logout = Auth.logout;
     }
 
-    PageController.$inject = ['$http', '$auth', '$rootScope', '$location', '$state', 'Auth'];
+    PageController.$inject = ['$http', '$auth', '$rootScope', '$location', '$state', 'Auth', 'pagesResolve'];
 })();

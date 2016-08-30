@@ -59,10 +59,15 @@
                     controller: 'AuthController as auth'
                 })
                 .state('subjects', {
-                    url: '/subjects',
-                    templateUrl: 'views/subjects.html',
-                    controller: 'SubjectController as subjects'
-                })
+                   url: '/subjects',
+                   templateUrl: 'views/subjects.html',
+                   controller: 'SubjectController as subjects',
+                   resolve: {
+                       subjectsResolve: function(httpAsPromise) {
+                           return httpAsPromise.fetch('/cms/public/subjects');
+                        }
+                    }
+               	})
                 .state('subjectsEdit', {
                     url: '/subject/:id/edit',
                     templateUrl: 'views/subjects_edit.html',
@@ -71,7 +76,12 @@
                 .state('pages', {
                     url: '/pages',
                     templateUrl: 'views/pages.html',
-                    controller: 'PageController as pages'
+                    controller: 'PageController as pages',
+                    resolve: {
+                       pagesResolve: function(httpAsPromise) {
+                           return httpAsPromise.fetch('/cms/public/pages');
+                        }
+                    }
                 })
                 .state('pagesEdit', {
                     url: '/page/:id/edit',
