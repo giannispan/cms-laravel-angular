@@ -6,7 +6,7 @@
         .module('app')
         .controller('EditPageController', EditPageController);
 
-    function EditPageController($http, $auth, $rootScope, $location, $state, $stateParams, Auth, httpAsPromise) {
+    function EditPageController($http, $location, $stateParams, Auth, httpAsPromise) {
         var self = this;
 
         //Visibility Object
@@ -37,6 +37,6 @@
         self.logout = Auth.logout;
     }
 
-    EditPageController.$inject = ['$http', '$auth', '$rootScope', '$location', '$state', '$stateParams', 'Auth', 'httpAsPromise'];
+    EditPageController.$inject = ['$http', '$location', '$stateParams', 'Auth', 'httpAsPromise'];
 
 })();

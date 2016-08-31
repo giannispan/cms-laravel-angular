@@ -6,7 +6,7 @@
         .module('app')
         .controller('PageController', PageController);
 
-    function PageController($http, $auth, $rootScope, $location, $state, Auth, pagesResolve, httpAsPromise) {
+    function PageController($location, Auth, pagesResolve, httpAsPromise) {
 
         var self = this;
         self.pagesResolve = pagesResolve;
@@ -62,5 +62,5 @@
         self.logout = Auth.logout;
     }
 
-    PageController.$inject = ['$http', '$auth', '$rootScope', '$location', '$state', 'Auth', 'pagesResolve', 'httpAsPromise'];
+    PageController.$inject = ['$location', 'Auth', 'pagesResolve', 'httpAsPromise'];
 })();

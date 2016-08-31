@@ -6,7 +6,7 @@
         .module('app')
         .controller('SubjectController', SubjectController);
 
-    function SubjectController($http, $auth, $rootScope, $location, $state, $stateParams, Auth, subjectsResolve, httpAsPromise) {
+    function SubjectController($location, Auth, subjectsResolve, httpAsPromise) {
 
         var self = this;
         self.subjectsResolve = subjectsResolve;
@@ -72,6 +72,6 @@
         self.logout = Auth.logout;
     }
 
-    SubjectController.$inject = ['$http', '$auth', '$rootScope', '$location', '$state', '$stateParams', 'Auth', 'subjectsResolve', 'httpAsPromise'];
+    SubjectController.$inject = ['$location', 'Auth', 'subjectsResolve', 'httpAsPromise'];
 
 })();

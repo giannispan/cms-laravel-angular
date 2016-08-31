@@ -6,7 +6,7 @@
         .module('app')
         .controller('EditSubjectController', EditSubjectController);
 
-    function EditSubjectController($http, $auth, $rootScope, $location, $state, $stateParams, Auth, httpAsPromise) {
+    function EditSubjectController($http, $location, $stateParams, Auth, httpAsPromise) {
 
         var self = this;
 
@@ -57,5 +57,5 @@
         self.logout = Auth.logout;
     }
 
-    EditSubjectController.$inject = ['$http', '$auth', '$rootScope', '$location', '$state', '$stateParams', 'Auth', 'httpAsPromise'];
+    EditSubjectController.$inject = ['$http', '$location', '$stateParams', 'Auth', 'httpAsPromise'];
 })();
