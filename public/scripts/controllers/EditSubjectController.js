@@ -6,7 +6,7 @@
         .module('app')
         .controller('EditSubjectController', EditSubjectController);
 
-    function EditSubjectController($http, $auth, $rootScope, $location, $state, $stateParams, Auth) {
+    function EditSubjectController($http, $auth, $rootScope, $location, $state, $stateParams, Auth, httpAsPromise) {
 
         var self = this;
 
@@ -19,6 +19,14 @@
             self.subject = subject.subject;
             self.subjects = subject.subjects;
 
+
+            self.successTextAlert = "Some content";
+            self.showSuccessAlert = true;
+
+            self.switchBool = function(value) {
+               self[value] = !self[value];
+            };
+
             //Find the length of subjects array plus 1
             self.subjectsLengthEdit = function() {
                 var ar = [];
@@ -29,12 +37,13 @@
             }
 
             self.updateSubject = function(subjectId) {
-                $http.put('http://localhost/cms/public/subject/' + $stateParams.id + '/update', {
+                httpAsPromise.put('http://localhost/cms/public/subject/' + $stateParams.id + '/update', {
                     name: self.subject.name,
                     visible: self.subject.visible,
                     position: self.subject.position
                 }).success(function(response) {
-                    // alert("Joke Updated Successfully");
+                    //location.reload();
+                    location.href = '/cms/public/#/subjects';
                 }).error(function() {
                     console.log("error");
                 });
@@ -48,5 +57,5 @@
         self.logout = Auth.logout;
     }
 
-    EditSubjectController.$inject = ['$http', '$auth', '$rootScope', '$location', '$state', '$stateParams', 'Auth'];
+    EditSubjectController.$inject = ['$http', '$auth', '$rootScope', '$location', '$state', '$stateParams', 'Auth', 'httpAsPromise'];
 })();

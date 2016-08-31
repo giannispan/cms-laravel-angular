@@ -8,25 +8,23 @@
                     return response.data; 
                 });
             },
-            post: function(endpoint, obj) {
-                var deferred = $q.defer();
-                $http.post(endpoint, obj)
-                    .success(function(data) {
-                        deferred.resolve(data);
-                    }).error(function() {
-                        deferred.reject();
-                    });
-                return deferred.promise;
+            post: function(endpoint, obj) {           
+                return $http.post(endpoint, obj).success(function (response) {
+                }).error(function() {
+                    console.log("error");
+                });
             },
             put: function(endpoint, obj) {
-                var deferred = $q.defer();
-                $http.put(endpoint, obj)
-                    .success(function(data) {
-                        deferred.resolve(data);
-                    }).error(function() {
-                        deferred.reject();
-                    });
-                return deferred.promise;
+                return $http.put(endpoint, obj).success(function (response) {
+                }).error(function() {
+                    console.log("error");
+                });
+            },
+            delete: function(endpoint) {
+                return $http.delete(endpoint).success(function (response) {
+                }).error(function() {
+                    console.log("error");
+                });
             }
         }
     }

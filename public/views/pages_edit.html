@@ -17,15 +17,15 @@
                         </div>
                     </div>
                     <!-- Page Subject -->
-                    <div class="form-group" ng-class="{ 'has-error' : myForm.subject.$invalid && !myForm.subject.$pristine }">
-                        <label for="page-name" class="col-sm-4 control-label">Page Subject</label>
-                        <div class="col-sm-6">
-                            <select name="subject" class="form-control" ng-model="page.page.subject_id" ng-options="subject.id as subject.name for subject in page.subjects" required>
-                                <option value="">Please select</option>
-                            </select>
-                            <p ng-show="myForm.subject.$invalid && !myForm.subject.$pristine" class="help-block">Subject is required.</p>
+                        <div class="form-group" ng-class="{ 'has-error' : myForm.subject.$invalid && !myForm.subject.$pristine }">
+                            <label for="page-name" class="col-sm-4 control-label">Page Subject</label>
+                            <div class="col-sm-6">
+                                <select name="subject" class="form-control" ng-model="page.page.subject_id" ng-options="subject.id as subject.name for subject in page.subjects" required>
+                                    <option value="">Please select</option>
+                                </select>
+                                <p ng-show="myForm.subject.$invalid && !myForm.subject.$pristine" class="help-block">Subject is required.</p>
+                            </div>
                         </div>
-                    </div>
                     <!--  Page Visibility -->
                     <div class="form-group" ng-class="{ 'has-error' : myForm.visible.$invalid && !myForm.visible.$pristine }">
                         <label class="col-sm-4 control-label">Visibility</label>
@@ -39,15 +39,16 @@
                     <!--  Page Content  -->
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Content:</label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-6">                          
                             <textarea class="form-control" rows="5" ng-value="{{ page.content }}" ng-model="page.page.content"></textarea>
                         </div>
                     </div>
+
                     <!--  Add Page Button -->
                     <div class="form-group">
                         <div class="col-sm-offset-4">
-                            <button type="submit" class="btn btn-primary" ng-click="page.updatePage(page.id)" ui-sref="pages" ng-disabled="myForm.$invalid">
-                                Save
+                            <button type="submit" class="btn btn-primary" ng-click="page.updatePage(page.id)" ng-disabled="myForm.$invalid">
+                                Update
                             </button>
                             <button type="button" class="btn btn-default" ui-sref="pages">
                                 Back to Pages

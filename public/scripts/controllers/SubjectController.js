@@ -6,7 +6,7 @@
         .module('app')
         .controller('SubjectController', SubjectController);
 
-    function SubjectController($http, $auth, $rootScope, $location, $state, $stateParams, Auth, subjectsResolve) {
+    function SubjectController($http, $auth, $rootScope, $location, $state, $stateParams, Auth, subjectsResolve, httpAsPromise) {
 
         var self = this;
         self.subjectsResolve = subjectsResolve;
@@ -41,21 +41,15 @@
 
             //Create subject
             self.addSubject = function() {
-                $http.post('http://localhost/cms/public/subject', {
+                httpAsPromise.post('http://localhost/cms/public/subject', {
                     name: self.name,
                     visible: self.visible,
                     position: self.position
 
                 }).success(function(response) {
-                    //console.log(response);
                     location.reload();
-                    // console.log(vm.jokes);
-                    // vm.jokes.push(response.data);
                     self.subjects.unshift(response.subjects);
-                    //console.log(self.subjects.subjects);
                     self.subject_name = '';
-                    // alert(data.message);
-                    // alert("Joke Created Successfully");
                 }).error(function() {
                     console.log("error");
                 });
@@ -66,7 +60,7 @@
                 var isConfirmDelete = confirm('Are you sure you want this record?');
 
                 if (isConfirmDelete) {
-                    $http.delete('http://localhost/cms/public/subject/' + subjectId)
+                    httpAsPromise.delete('http://localhost/cms/public/subject/' + subjectId)
 
                     .success(function() {
                         location.reload();
@@ -78,6 +72,6 @@
         self.logout = Auth.logout;
     }
 
-    SubjectController.$inject = ['$http', '$auth', '$rootScope', '$location', '$state', 'Auth', '$stateParams', 'subjectsResolve'];
+    SubjectController.$inject = ['$http', '$auth', '$rootScope', '$location', '$state', '$stateParams', 'Auth', 'subjectsResolve', 'httpAsPromise'];
 
 })();
