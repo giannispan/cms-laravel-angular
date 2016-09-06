@@ -6,7 +6,7 @@
         .module('app')
         .controller('SubjectController', SubjectController);
 
-    function SubjectController($location, Auth, subjectsResolve, httpAsPromise) {
+    function SubjectController($location, Auth, subjectsResolve, httpService) {
 
         var self = this;
         self.subjectsResolve = subjectsResolve;
@@ -41,7 +41,7 @@
 
             //Create subject
             self.addSubject = function() {
-                httpAsPromise.post('http://localhost/cms/public/subject', {
+                httpService.post('http://localhost/cms/public/subject', {
                     name: self.name,
                     visible: self.visible,
                     position: self.position
@@ -60,7 +60,7 @@
                 var isConfirmDelete = confirm('Are you sure you want this record?');
 
                 if (isConfirmDelete) {
-                    httpAsPromise.delete('http://localhost/cms/public/subject/' + subjectId)
+                    httpService.delete('http://localhost/cms/public/subject/' + subjectId)
 
                     .success(function() {
                         location.reload();
@@ -72,6 +72,6 @@
         self.logout = Auth.logout;
     }
 
-    SubjectController.$inject = ['$location', 'Auth', 'subjectsResolve', 'httpAsPromise'];
+    SubjectController.$inject = ['$location', 'Auth', 'subjectsResolve', 'httpService'];
 
 })();

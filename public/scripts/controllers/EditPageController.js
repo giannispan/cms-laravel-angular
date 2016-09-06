@@ -6,7 +6,7 @@
         .module('app')
         .controller('EditPageController', EditPageController);
 
-    function EditPageController($http, $location, $stateParams, Auth, httpAsPromise) {
+    function EditPageController($http, $location, $stateParams, Auth, httpService) {
         var self = this;
 
         //Visibility Object
@@ -19,7 +19,7 @@
             self.subjects = page.subjects;
 
             self.updatePage = function(pageId) {
-                httpAsPromise.put('http://localhost/cms/public/page/' + $stateParams.id + '/update', {
+                httpService.put('http://localhost/cms/public/page/' + $stateParams.id + '/update', {
                     title: self.page.title,
                     visible: self.page.visible,
                     content: self.page.content,
@@ -37,6 +37,6 @@
         self.logout = Auth.logout;
     }
 
-    EditPageController.$inject = ['$http', '$location', '$stateParams', 'Auth', 'httpAsPromise'];
+    EditPageController.$inject = ['$http', '$location', '$stateParams', 'Auth', 'httpService'];
 
 })();

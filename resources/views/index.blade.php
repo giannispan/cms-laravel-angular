@@ -29,7 +29,7 @@
 
     <!-- services -->
     <script src="scripts/services/AuthService/authService.js"></script>
-    <script src="scripts/services/httpAsPromise.js"></script>
+    <script src="scripts/services/httpService.js"></script>
 
     <!-- directives -->
     <script src="scripts/directives/menu.js"></script>

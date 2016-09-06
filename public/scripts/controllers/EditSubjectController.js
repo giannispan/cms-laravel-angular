@@ -6,7 +6,7 @@
         .module('app')
         .controller('EditSubjectController', EditSubjectController);
 
-    function EditSubjectController($http, $location, $stateParams, Auth, httpAsPromise) {
+    function EditSubjectController($http, $location, $stateParams, Auth, httpService) {
 
         var self = this;
 
@@ -37,7 +37,7 @@
             }
 
             self.updateSubject = function(subjectId) {
-                httpAsPromise.put('http://localhost/cms/public/subject/' + $stateParams.id + '/update', {
+                httpService.put('http://localhost/cms/public/subject/' + $stateParams.id + '/update', {
                     name: self.subject.name,
                     visible: self.subject.visible,
                     position: self.subject.position
@@ -57,5 +57,5 @@
         self.logout = Auth.logout;
     }
 
-    EditSubjectController.$inject = ['$http', '$location', '$stateParams', 'Auth', 'httpAsPromise'];
+    EditSubjectController.$inject = ['$http', '$location', '$stateParams', 'Auth', 'httpService'];
 })();

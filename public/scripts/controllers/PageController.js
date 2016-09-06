@@ -6,7 +6,7 @@
         .module('app')
         .controller('PageController', PageController);
 
-    function PageController($location, Auth, pagesResolve, httpAsPromise) {
+    function PageController($location, Auth, pagesResolve, httpService) {
 
         var self = this;
         self.pagesResolve = pagesResolve;
@@ -31,7 +31,7 @@
             //Create page
             self.addPage = function() {
 
-                httpAsPromise.post('http://localhost/cms/public/page', {
+                httpService.post('http://localhost/cms/public/page', {
                     title: self.title,
                     visible: self.visible,
                     content: self.content,
@@ -50,7 +50,7 @@
                 var isConfirmDelete = confirm('Are you sure you want this record?');
 
                 if (isConfirmDelete) {
-                    httpAsPromise.delete('http://localhost/cms/public/page/' + pageId)
+                    httpService.delete('http://localhost/cms/public/page/' + pageId)
 
                     .success(function() {
                         location.reload();
@@ -62,5 +62,5 @@
         self.logout = Auth.logout;
     }
 
-    PageController.$inject = ['$location', 'Auth', 'pagesResolve', 'httpAsPromise'];
+    PageController.$inject = ['$location', 'Auth', 'pagesResolve', 'httpService'];
 })();

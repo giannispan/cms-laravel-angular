@@ -63,8 +63,8 @@
                    templateUrl: 'views/subjects.html',
                    controller: 'SubjectController as subjects',
                    resolve: {
-                       subjectsResolve: function(httpAsPromise) {
-                           return httpAsPromise.fetch('/cms/public/subjects');
+                       subjectsResolve: function(httpService) {
+                           return httpService.fetch('/cms/public/subjects');
                         }
                     }
                	})
@@ -78,8 +78,8 @@
                     templateUrl: 'views/pages.html',
                     controller: 'PageController as pages',
                     resolve: {
-                       pagesResolve: function(httpAsPromise) {
-                           return httpAsPromise.fetch('/cms/public/pages');
+                       pagesResolve: function(httpService) {
+                           return httpService.fetch('/cms/public/pages');
                         }
                     }
                 })
