@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function httpService($q, $http) {
+    function httpService($http) {
         return {
             fetch: function(endpoint) {
                 return $http.get(endpoint).then(function (response) {                     
@@ -29,7 +29,7 @@
         }
     }
 
-    httpService.$inject = ['$q', '$http'];
+    httpService.$inject = ['$http'];
 
     angular.module('app')
         .factory('httpService', httpService);
